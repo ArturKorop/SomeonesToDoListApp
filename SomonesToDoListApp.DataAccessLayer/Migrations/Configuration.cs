@@ -36,6 +36,7 @@ namespace SomeonesToDoListApp.DataAccessLayer.Migrations
             };
 
             someonesToDoListContext.ToDos.AddOrUpdate(toDo);
+            someonesToDoListContext.SaveChanges();
 
         }
 

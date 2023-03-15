@@ -30,11 +30,6 @@ namespace SomeonesToDoListApp.Controllers
 			}
 		}
 
-		/// <summary>
-		/// An HTTP Post request to create a new to do item
-		/// </summary>
-		/// <param name="toDo"></param>
-		/// <returns></returns>
 		[HttpPost]
 		[Route("CreateToDo")]
 		public async Task<IHttpActionResult> CreateToDo([FromBody] ToDoViewModel toDo)
@@ -45,27 +40,57 @@ namespace SomeonesToDoListApp.Controllers
 			}
 			catch (Exception exception)
 			{
+				_logger.Error(exception);
 				throw;
 			}
 		}
 
-		/// <summary>
-		/// An HTTP Get request to retrieve all of the to do items
-		/// </summary>
-		/// <returns></returns>
-		[HttpGet]
+        [HttpPost]
+        [Route("UpdateToDo")]
+        public async Task<IHttpActionResult> UpdateToDo([FromBody] ToDoViewModel toDo)
+        {
+            try
+            {
+                return Ok(await ToDoService.UpdateToDoAsync(toDo));
+            }
+            catch (Exception exception)
+            {
+                _logger.Error(exception);
+                throw;
+            }
+        }
+
+        [HttpGet]
 		[Route("GetToDos")]
 		public async Task<IHttpActionResult> GetToDos()
 		{
 			try
 			{
-				return Ok(await ToDoService.GetToDoItemsAsync());
+				var data = await ToDoService.GetToDoItemsAsync();
+				return Ok(data);
 			}
 			catch (Exception exception)
 			{
-				throw;
+                _logger.Error(exception);
+                throw;
 			}
 		}
 
-	}
+        [HttpGet]
+        [Route("RemoveToDo")]
+        public async Task<IHttpActionResult> RemoveToDo(int id)
+        {
+            try
+            {
+                var result = await ToDoService.RemoveToDoAsync(id);
+                return Ok(result);
+            }
+            catch (Exception exception)
+            {
+                _logger.Error(exception);
+                throw;
+            }
+        }
+
+    }
 }

@@ -4,6 +4,7 @@ using Owin;
 using System.Web.Cors;
 using Microsoft.Owin.Cors;
 using System.Threading.Tasks;
+using SomeonesToDoListApp.DataAccessLayer.Context;
 
 [assembly: OwinStartup(typeof(Startup))]
 namespace SomeonesToDoListApp
@@ -33,6 +34,12 @@ namespace SomeonesToDoListApp
 
 			// Use the specified CORS options for cross domain requests
 			appBuilder.UseCors(corsOptions);
-		}
+
+            using (var client = new SomeonesToDoListContext())
+            {
+				client.Database.CreateIfNotExists();
+            }
+
+        }
 	}
 }

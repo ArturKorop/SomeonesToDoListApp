@@ -8,13 +8,14 @@ using AutoMapper;
 using SomeonesToDoListApp.DataAccessLayer.Entities;
 using System.Data.Entity;
 using NLog;
+using System.Linq.Expressions;
 
 namespace SomeonesToDoListApp.Services
 {
 	public class ToDoService : IToDoService
 	{
 		// Private property for the injected database context
-		private SomeonesToDoListContext SomeonesToDoListContext { get; set; }
+		private SomeonesToDoListContext _someonesToDoListContext { get; set; }
 
 		// Sets up the logger for the current service class
 		private readonly Logger _logger = LogManager.GetCurrentClassLogger();
@@ -22,7 +23,7 @@ namespace SomeonesToDoListApp.Services
 		// Injected the database context into the constructor of the service class
 		public ToDoService(SomeonesToDoListContext someonesToDoListContext)
 		{
-			SomeonesToDoListContext = someonesToDoListContext;
+			_someonesToDoListContext = someonesToDoListContext;
 		}
 
 		/// <summary>
@@ -37,9 +38,10 @@ namespace SomeonesToDoListApp.Services
 				var toDo = Mapper.Map<ToDoViewModel, ToDo>(toDoViewModel);
 
 				// Add the entity to the database context
-				SomeonesToDoListContext.ToDos.Add(toDo);
+				_someonesToDoListContext.ToDos.Add(toDo);
+				await _someonesToDoListContext.SaveChangesAsync();
 
-				await Task.Delay(1000);
+				//await Task.Delay(1000);
 
 				// Returns the true for the successfully completed operation
 				return true;
@@ -62,7 +64,7 @@ namespace SomeonesToDoListApp.Services
 			{
 				// Map the view model to the entity and return a collection of the current to do list items
 				return Mapper.Map<IEnumerable<ToDo>, IEnumerable<ToDoViewModel>>
-					(await SomeonesToDoListContext.ToDos.ToListAsync());
+					(await _someonesToDoListContext.ToDos.ToListAsync());
 			}
 			catch (Exception exception)
 			{
@@ -75,8 +77,53 @@ namespace SomeonesToDoListApp.Services
 		public void Dispose()
 		{
 			// Disposes the service
-			SomeonesToDoListContext?.Dispose();
+			_someonesToDoListContext?.Dispose();
 		}
 
+		public async Task<bool> UpdateToDoAsync(ToDoViewModel viewModel)
+		{
+			try
+			{
+				var existingModel = await _someonesToDoListContext.ToDos.FindAsync(viewModel.Id);
+				if (existingModel == null)
+				{
+					throw new InvalidOperationException($"Can't find existing ToDo item with ID: ${viewModel.Id}");
+				}
+
+				existingModel.ToDoItem = viewModel.ToDoItem;
+				_someonesToDoListContext.Entry(existingModel).State = EntityState.Modified;
+				await _someonesToDoListContext.SaveChangesAsync();
+
+				return true;
+			}
+			catch (Exception exception)
+			{
+				_logger.Error(exception);
+				throw;
+			}
+
+		}
+
+		public async Task<bool> RemoveToDoAsync(int id)
+		{
+			try
+			{
+				var existingModel = await _someonesToDoListContext.ToDos.FindAsync(id);
+				if (existingModel == null)
+				{
+					throw new InvalidOperationException($"Can't find existing ToDo item with ID: ${id}");
+				}
+
+				_someonesToDoListContext.ToDos.Remove(existingModel);
+				_someonesToDoListContext.SaveChanges();
+
+				return true;
+			}
+			catch (Exception exception)
+			{
+				_logger.Error(exception);
+				throw;
+			}
+		}
 	}
 }
