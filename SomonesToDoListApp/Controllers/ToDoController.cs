@@ -7,8 +7,8 @@ using NLog;
 
 namespace SomeonesToDoListApp.Controllers
 {
-	[RoutePrefix("ToDo")]
-	public class ToDoController : ApiController
+    [RoutePrefix("ToDo")]
+    public class ToDoController : ApiController
 	{
 		// Sets up the logger for the current service class
 		private readonly Logger _logger = LogManager.GetCurrentClassLogger();
@@ -61,7 +61,7 @@ namespace SomeonesToDoListApp.Controllers
         }
 
         [HttpGet]
-		[Route("GetToDos")]
+		[Route("Get")]
 		public async Task<IHttpActionResult> GetToDos()
 		{
 			try
@@ -76,6 +76,7 @@ namespace SomeonesToDoListApp.Controllers
 			}
 		}
 
+		/*
         [HttpGet]
         [Route("RemoveToDo")]
         public async Task<IHttpActionResult> RemoveToDo(int id)
@@ -91,6 +92,7 @@ namespace SomeonesToDoListApp.Controllers
                 throw;
             }
         }
+		*/
 
     }
 }

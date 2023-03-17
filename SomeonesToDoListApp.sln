@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomonesToDoListApp.DataAcce
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomonesToDoListApp.WebApi", "SomonesToDoListApp\SomonesToDoListApp.WebApi.csproj", "{547F61DA-E04F-4428-9D98-EB2F7B2359D6}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "somonestodolistapp.ui", "SomonesToDoListApp.UI\somonestodolistapp.ui.esproj", "{01DA7AA4-1B6B-4043-BF78-6FAFF99D442A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,12 @@ Global
 		{547F61DA-E04F-4428-9D98-EB2F7B2359D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{547F61DA-E04F-4428-9D98-EB2F7B2359D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{547F61DA-E04F-4428-9D98-EB2F7B2359D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01DA7AA4-1B6B-4043-BF78-6FAFF99D442A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01DA7AA4-1B6B-4043-BF78-6FAFF99D442A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01DA7AA4-1B6B-4043-BF78-6FAFF99D442A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{01DA7AA4-1B6B-4043-BF78-6FAFF99D442A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01DA7AA4-1B6B-4043-BF78-6FAFF99D442A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01DA7AA4-1B6B-4043-BF78-6FAFF99D442A}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

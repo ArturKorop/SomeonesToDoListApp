@@ -21,7 +21,7 @@ namespace SomeonesToDoListApp
 			};
 
 			// Default origin for Angular
-			corsPolicy.Origins.Add("http://localhost:4200");
+			corsPolicy.Origins.Add("https://localhost:3000");
 
 			var corsOptions = new CorsOptions
 			{
