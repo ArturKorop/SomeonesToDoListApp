@@ -31,8 +31,8 @@ namespace SomeonesToDoListApp.Controllers
 		}
 
 		[HttpPost]
-		[Route("CreateToDo")]
-		public async Task<IHttpActionResult> CreateToDo([FromBody] ToDoViewModel toDo)
+		[Route("Post")]
+		public async Task<IHttpActionResult> PostToDo([FromBody] ToDoViewModel toDo)
 		{
 			try
 			{
@@ -45,9 +45,9 @@ namespace SomeonesToDoListApp.Controllers
 			}
 		}
 
-        [HttpPost]
-        [Route("UpdateToDo")]
-        public async Task<IHttpActionResult> UpdateToDo([FromBody] ToDoViewModel toDo)
+        [HttpPut]
+        [Route("Put")]
+        public async Task<IHttpActionResult> PutToDo([FromBody] ToDoViewModel toDo)
         {
             try
             {
@@ -76,10 +76,9 @@ namespace SomeonesToDoListApp.Controllers
 			}
 		}
 
-		/*
-        [HttpGet]
-        [Route("RemoveToDo")]
-        public async Task<IHttpActionResult> RemoveToDo(int id)
+		[HttpDelete]
+        [Route("Delete")]
+        public async Task<IHttpActionResult> DeleteToDo(int id)
         {
             try
             {
@@ -92,7 +91,6 @@ namespace SomeonesToDoListApp.Controllers
                 throw;
             }
         }
-		*/
 
     }
 }
